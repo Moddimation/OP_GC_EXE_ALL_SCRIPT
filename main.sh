@@ -72,14 +72,16 @@
               echo "  # Run filter..." && \
               cd "$sub_file_name" && \
               find . -type f -exec sh -c '
-		possible_sub_archive=$(basename "{}") 
+		possible_sub_archive=$(basename "$1") 
 		mkdir $possible_sub_archive 
-		dolphinTool extract -i "{}" -o "$possible_sub_archive" -q 2>/dev/null || true \;
-                if [ -z "$(ls -A \'$possible_sub_archive/\')" ]; then
-		  rmdir $possible_sub_archive;
+		dolphinTool extract -i "$1" -o "$possible_sub_archive" -q 2>/dev/null || true \;
+                fileList=$(ls -A "$possible_sub_archive")
+      		if [ -z "$fileList" ]; then
+		  rmdir "$possible_sub_archive"
                 else
-		  rm {} -f;
-		fi' \; && \
+		  rm "$1" -f
+		fi
+	      ' _ {} \; && \
 	      filterExt "../../tmp/$sub_file_name/" \; && \
 	      echo "  # Post processing ..." && \
 	      filterFind "../../tmp/$sub_file_name/" && \
