@@ -12,7 +12,7 @@
 #	alias filterFind='find . -type f -exec grep -Elis "ppceabi|metrotrk|metrowerks|msl_c|text section layout|[a-zA-Z]{6,}\.(cpp|hpp|a|o|c|h)\b$" {} \; | xargs -I{} mv "{}"'
 #	alias dolphinTool='flatpak run --command="dolphin-tool" --filesystem host org.DolphinEmu.dolphin-emu'
 	alias dolphinTool='dolphin-tool'
-	dolphinTool() { dolphin-tool $@ }
+	dolphinTool() { command dolphin-tool "$@" }
 	export -f dolphinTool
         echo "# Getting index ..."
         wget -q https://myrient.erista.me/files/Redump/Nintendo%20-%20GameCube%20-%20NKit%20RVZ%20%5Bzstd-19-128k%5D/
