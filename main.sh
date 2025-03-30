@@ -61,9 +61,9 @@
               mkdir "../tmp/$sub_file_name" -p && \
               mkdir "$sub_file_name" -p && \
               echo "  # Extracting sub..." && \
-              dolphinTool extract -i "$possible_archive_file" -o "$sub_file_name" -q 2>/dev/null || true && \
+              dolphinTool extract -i "$possible_archive_file" -o "$sub_file_name" -q || true && \
               rm "$possible_archive_file" && \
-              if [ -z "$(ls -A '$sub_file_name/')" ]; then
+              if [ -z "$(ls -A '$sub_file_name' 2>/dev/null)" ]; then
                 echo "  ! No data found, continue";
                 rm -rf "$sub_file_name";
                 rm -rf "../tmp/$sub_file_name";
@@ -74,7 +74,7 @@
               find . -type f -exec sh -c '
 		possible_sub_archive=$(basename "$1") 
 		mkdir $possible_sub_archive 
-		dolphinTool extract -i "$1" -o "$possible_sub_archive" -q 2>/dev/null || true \;
+		dolphinTool extract -i "$1" -o "$possible_sub_archive" -q || true \;
                 fileList=$(ls -A "$possible_sub_archive")
       		if [ -z "$fileList" ]; then
 		  rmdir "$possible_sub_archive"
