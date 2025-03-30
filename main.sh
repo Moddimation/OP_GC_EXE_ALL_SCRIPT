@@ -88,7 +88,7 @@
               filterDelete && \
               cd "../../$file_name" && \
               rm -rf "$sub_file_name" && \
-              if ! rmdir "../tmp/$sub_file_name"; then
+              if ! rmdir --ignore-fail-on-non-empty "../tmp/$sub_file_name"; then
                 echo "  ! No code data found, continuing";
                 continue;
               fi && \
