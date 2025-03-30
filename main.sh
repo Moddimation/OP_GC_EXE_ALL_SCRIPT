@@ -12,9 +12,9 @@
 #	alias filterFind='find . -type f -exec grep -Elis "ppceabi|metrotrk|metrowerks|msl_c|text section layout|[a-zA-Z]{6,}\.(cpp|hpp|a|o|c|h)\b$" {} \; | xargs -I{} mv "{}"'
 #	alias dolphinTool='flatpak run --command="dolphin-tool" --filesystem host org.DolphinEmu.dolphin-emu'
 	alias dolphinTool='dolphin-tool'
-	dolphinTool() {
-	  command dolphin-tool "$@"
-	export -f dolphinTool
+	dolphinToolF() {
+	  command dolphinTool "$@"
+	export -f dolphinToolF
         echo "# Getting index ..."
         wget -q https://myrient.erista.me/files/Redump/Nintendo%20-%20GameCube%20-%20NKit%20RVZ%20%5Bzstd-19-128k%5D/
         export link_prefix="https://myrient.erista.me/files/Redump/Nintendo%20-%20GameCube%20-%20NKit%20RVZ%20%5Bzstd-19-128k%5D"
@@ -79,7 +79,7 @@
 		possible_sub_archive_name="${possible_sub_archive%.*}"
 		shopt -u extglob
 		mkdir "$possible_sub_archive_name"
-		dolphinTool extract -i "$1" -o "$possible_sub_archive_name" -q || true \;
+		dolphinToolF extract -i "$1" -o "$possible_sub_archive_name" -q || true \;
       		if ! rmdir --ignore-fail-on-non-empty "$possible_sub_archive_name"; then
 		  rm "$1" -f
 		fi
