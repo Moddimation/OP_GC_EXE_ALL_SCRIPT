@@ -75,7 +75,7 @@
 		mkdir $possible_sub_archive
 		dolphinTool extract -i "$1" -o "$possible_sub_archive" -q || true \;
                 isArchive=$(rmdir "$possible_sub_archive")
-      		if ! rmdir --ignore-fail-on-non-empty "$possible_sub_archive"; then
+      		if rmdir --ignore-fail-on-non-empty "$possible_sub_archive"; then
 		  rm "$1" -f
 		fi
 	      ' _ {} \; && \
@@ -100,7 +100,7 @@
           done && \
 	  echo " # Post processing ..." && \
           filterFind "../tmp/" && \
-          if ! rmdir --ignore-fail-on-non-empty ../tmp/"; then 
+          if ! rmdir --ignore-fail-on-non-empty "../tmp/"; then 
             echo " ! No code data found.";
             echo "   Continuing, current size:";
             du -sh .;
