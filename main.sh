@@ -63,16 +63,16 @@
               echo "  # Extracting sub..." && \
               dolphinTool extract -i "$possible_archive_file" -o "$sub_file_name" -q || true && \
               rm "$possible_archive_file" && \
-              if rmdir --ignore-fail-on-non-empty '$sub_file_name'; then
+              if ! rmdir --ignore-fail-on-non-empty '$sub_file_name'; then
                 echo "  ! No data found, continue";
                 rm -rf "../tmp/$sub_file_name";
-                continue; 
+                continue;
               fi && \
               echo "  # Run filter..." && \
               cd "$sub_file_name" && \
               find . -type f -exec sh -c '
-		possible_sub_archive=$(basename "$1") 
-		mkdir $possible_sub_archive 
+		possible_sub_archive=$(basename "$1")
+		mkdir $possible_sub_archive
 		dolphinTool extract -i "$1" -o "$possible_sub_archive" -q || true \;
                 isArchive=$(rmdir "$possible_sub_archive")
       		if ! rmdir --ignore-fail-on-non-empty "$possible_sub_archive"; then
