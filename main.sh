@@ -72,7 +72,8 @@
               cd "$sub_file_name" && \
               find . -type f -exec sh -c '
 		shopt -s extglob
-		possible_sub_archive="$(basename "$1")"
+		possible_sub_archive="${1##*/}"
+		possible_sub_archive_name="${possible_sub_archive%.*}"
 		shopt -u extglob
 		mkdir $possible_sub_archive
 		dolphinTool extract -i "$1" -o "$possible_sub_archive" -q || true \;
