@@ -13,6 +13,7 @@
 #	alias dolphinTool='flatpak run --command="dolphin-tool" --filesystem host org.DolphinEmu.dolphin-emu'
 	alias dolphinTool='dolphin-tool'
 	dolphinTool() { dolphin-tool $@ }
+	export -f dolphinTool
         echo "# Getting index ..."
         wget -q https://myrient.erista.me/files/Redump/Nintendo%20-%20GameCube%20-%20NKit%20RVZ%20%5Bzstd-19-128k%5D/
         export link_prefix="https://myrient.erista.me/files/Redump/Nintendo%20-%20GameCube%20-%20NKit%20RVZ%20%5Bzstd-19-128k%5D"
