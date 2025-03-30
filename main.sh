@@ -52,16 +52,6 @@
           rm "$rvz_file" && \
           echo " # Run filter ..." && \
 
-	  mkdir -p wszstmp && \
-	  cd wszstmp && \
-	  for i in {1..5}; do
-       	    wszst extract -i "." -D "../wszstmp"  -o -R -p -H --number --in-order || true;
-	    find . -iname "DOL.*header*" -delete;
-	  done && \
-	  cd "../$file_name/" && \
-	  rm -rf ./* && mv "../wszstmp/*" "." && \
-	  rmdir "../wszstmp" && \
-
           rm -rf tmp && \
           mkdir -p tmp && \
           cd "$file_name" && \
@@ -77,8 +67,7 @@
               #echo "  # Extracting sub..." && \
               dolphinTool extract -i "$possible_archive_file" -o "files/$sub_file_name.d" -q 2>/dev/null || true && \
 #              wszst extract "$possible_archive_file" -D "files/$sub_file_name.d" -o --dec -r -i -a > /dev/null 2>&1 || true && \
-	      find . -name "wszst*" -exec rm -f {} \;
-              if [ -z "$(ls -A "files/$sub_file_name.d")" ]; then
+	      if [ -z "$(ls -A "files/$sub_file_name.d")" ]; then
                 #echo "  ! No data found, continue";
                 rmdir "files/$sub_file_name.d";
                 continue;
@@ -133,9 +122,12 @@
        	    wszst extract -i "." -D "../wszstmp"  -o -R -p -H --number --in-order || true;
 	    find . -iname "DOL.*header*" -delete;
 	  done && \
-	  cd "../$file_name/" && \
-	  rm -rf ./* && mv "../wszstmp/*" "." && \
-	  rmdir "../wszstmp" && \
+	  find . -name "wszst*txt" -exec rm -f {} \;
+	 # rm -rf "../$file_name/" && \
+	 # mkdir "../$file_name/" && \
+	  cp -rf * "../$file_name/" 2>/dev/null && \
+          cd "../$file_name/" && \
+	  rm -rf "../wszstmp/" && \
 
           filterTextFiles && \
           filterDelete && \
