@@ -50,16 +50,21 @@
           echo " # Extracting game ..." && \
           dolphinTool extract -i "$rvz_file" -o "$file_name/" -q 2>/dev/null || true && \
           rm "$rvz_file" && \
-          cd "$file_name" && \
           echo " # Run filter ..." && \
-          rm -rf ../tmp && \
-          mkdir -p ../tmp && \
-	  mkdir -p ../wszstmp && \
 
-	  wszst extract -i "." -D "../wszstmp"  -o -a -a -p -H --number --in-order || true && \
+	  mkdir -p wszstmp && \
+	  cd wszstmp && \
+	  for i in {1..5}; do
+       	    wszst extract -i "." -D "../wszstmp"  -o -R -p -H --number --in-order || true;
+	    find . -iname "DOL.*header*" -delete;
+	  done && \
+	  cd "../$file_name/" && \
 	  rm -rf ./* && mv "../wszstmp/*" "." && \
 	  rmdir "../wszstmp" && \
 
+          rm -rf tmp && \
+          mkdir -p tmp && \
+          cd "$file_name" && \
           filterExt "../tmp/" \; && \
           for i in 1; do
 #	    echo "   DBG: Scan for archives, iteration $i: files: $(find .)" && \
@@ -122,7 +127,13 @@
             done;
 	  done && \
 
-	  wszst extract -i "." -D "../wszstmp"  -o -a -a -p -H --number --in-order || true && \
+	  mkdir -p wszstmp && \
+	  cd wszstmp && \
+	  for i in {1..5}; do
+       	    wszst extract -i "." -D "../wszstmp"  -o -R -p -H --number --in-order || true;
+	    find . -iname "DOL.*header*" -delete;
+	  done && \
+	  cd "../$file_name/" && \
 	  rm -rf ./* && mv "../wszstmp/*" "." && \
 	  rmdir "../wszstmp" && \
 
