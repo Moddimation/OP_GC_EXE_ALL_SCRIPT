@@ -51,7 +51,7 @@
           rm "$filename" && \
           rvz_file=$(ls *.rvz | head -n 1) && \
           echo " # Extracting game ..." && \
-          dolphinTool extract -i "$rvz_file" -o "$file_name/" -q || true && \
+          dolphinTool extract -i "$rvz_file" -o "$file_name/" -q 2>/dev/null || true && \
           rm "$rvz_file" && \
           cd "$file_name" && \
           echo " # Run filter ..." && \
@@ -64,9 +64,9 @@
               mkdir "../tmp/$sub_file_name" -p && \
               mkdir "$sub_file_name" -p && \
               echo "  # Extracting sub..." && \
-              dolphinTool extract -i "$possible_archive_file" -o "$sub_file_name" -q || true && \
+              dolphinTool extract -i "$possible_archive_file" -o "$sub_file_name" -q 2>/dev/null || true && \
               rm "$possible_archive_file" && \
-              if rmdir --ignore-fail-on-non-empty '$sub_file_name'; then
+              if rmdir --ignore-fail-on-non-empty "$sub_file_name"; then
                 echo "  ! No data found, continue";
                 rm -rf "../tmp/$sub_file_name";
                 continue;
@@ -79,7 +79,7 @@
 		possible_sub_archive_name="${possible_sub_archive%.*}"
 		shopt -u extglob
 		mkdir "$possible_sub_archive_name"
-		dolphinToolF extract -i "$1" -o "$possible_sub_archive_name" -q || true \;
+		dolphin-tool extract -i "$1" -o "$possible_sub_archive_name" -q 2>/dev/null || true \;
       		if ! rmdir --ignore-fail-on-non-empty "$possible_sub_archive_name"; then
 		  rm "$1" -f
 		fi
