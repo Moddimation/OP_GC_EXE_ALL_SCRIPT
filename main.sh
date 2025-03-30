@@ -63,7 +63,7 @@
               echo "  # Extracting sub..." && \
               dolphinTool extract -i "$possible_archive_file" -o "$sub_file_name" -q 2>/dev/null || true && \
               rm "$possible_archive_file" && \
-              if [ -z "$(ls -A "$sub_file_name/")" ]; then
+              if [ -z "$(ls -A '$sub_file_name/')" ]; then
                 echo "  ! No data found, continue";
                 rm -rf "$sub_file_name";
                 rm -rf "../tmp/$sub_file_name";
@@ -71,15 +71,15 @@
               fi && \
               echo "  # Run filter..." && \
               cd "$sub_file_name" && \
-              find . -type f 
-                -exec possible_sub_archive=$(basename "{}") \;
-                -exec mkdir $possible_sub_archive \;
-                -exec dolphinTool extract -i {} -o $possible_sub_archive -q 2>/dev/null || true \;
-                -exec if [ -z "$(ls -A $possible_sub_archive/)" ]; then
+              find . -type f -exec sh -c '
+		possible_sub_archive=$(basename "{}") 
+		mkdir $possible_sub_archive 
+		dolphinTool extract -i "{}" -o "$possible_sub_archive" -q 2>/dev/null || true \;
+                if [ -z "$(ls -A \'$possible_sub_archive/\')" ]; then
 		  rmdir $possible_sub_archive;
                 else
 		  rm {} -f;
-		fi \; && \
+		fi' \; && \
 	      filterExt "../../tmp/$sub_file_name/" \; && \
 	      echo "  # Post processing ..." && \
 	      filterFind "../../tmp/$sub_file_name/" && \
