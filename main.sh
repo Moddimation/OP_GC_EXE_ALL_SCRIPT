@@ -71,10 +71,18 @@
               fi && \
               echo "  # Run filter..." && \
               cd "$sub_file_name" && \
+              find . -type f 
+                -exec possible_sub_archive=$(basename "{}") \;
+                -exec mkdir $possible_sub_archive \;
+                -exec dolphinTool extract -i {} -o $possible_sub_archive -q 2>/dev/null || true \;
+                -exec if [ -z "$(ls -A $possible_sub_archive/)" ]; then
+		  rmdir $possible_sub_archive;
+                else
+		  rm {} -f;
+		fi \; && \
 	      filterExt "../../tmp/$sub_file_name/" \; && \
 	      echo "  # Post processing ..." && \
 	      filterFind "../../tmp/$sub_file_name/" && \
-#	      echo "no" && \
 	      ignored=$(find . -type f | awk -F. '{if (NF>1) print $NF}' | sort -u | paste -sd "," - ) && \
               cd "../../tmp/$sub_file_name" && \
               filterTextFiles && \
@@ -94,7 +102,6 @@
           done && \
 	  echo " # Post processing ..." && \
           filterFind "../tmp/" && \
-#	  echo "no" && \
           if [ -z "$(ls -A ../tmp/)" ]; then 
             echo " ! No code data found.";
             echo "   Continuing, current size:";
@@ -104,14 +111,11 @@
             rm -rf "$file_name";
             continue;
           fi && \
-#	  echo "nooo" && \
           ignored=$(find . -type f | awk -F. '{if (NF>1) print $NF}' | sort -u | paste -sd "," - ) && \
           rm -rf ./* && \
           cd ../tmp && \
           rm -f *lang* *locale* *CONTENT* && \
-#	  echo "noooooo" && \
           filterTextFiles && \
-#	  echo "yes" && \
           filterDelete && \
           ls | xargs -I{} mv "{}" "../$file_name" && \
           rm -rf "./*" && \
