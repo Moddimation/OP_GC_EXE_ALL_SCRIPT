@@ -3,7 +3,7 @@
 #        sudo flatpak install flathub org.DolphinEmu.dolphin-emu -y
 	echo "# Clearing old files ..."
 #	sh clean.sh
-	rm index.* *.zip* *.rvz* -f
+	rm index.* *.zip.* *.rvz* -f
         alias filterDelete='find . -type f \( -iname "*.gct" -or -iname "*.gfn" -or -iname "*.bnr" -or -iname "*.h4m" -or -iname "*.sni" -or -iname "*.gsf" -or -iname "*.zsd" -or -iname "*.thp" -or -iname "*.mpc" -or -iname "*.bmd" -or -iname "*.fpk" -or -iname "*.viv" -or -iname "*.ngc" -or -iname "*.div" -or -iname "*.vid" -or -iname "*.vp*" -or -iname "*.sp" -or -iname "*.str" -or -iname "*.mus" -or -iname "*.flo" -or -iname "*.exa" -or -iname "*.ssd" -or -iname "*.sbf" -or -iname "*.spe" -or -iname "*.dat" -or -iname "*.sdt" -or -iname "*.lmp" -or -iname "*.feb" -or -iname "*.bin" -or -iname "*.dat" -or -iname "*.obj" -or -iname "*.lfb" -or -iname "*.med" -or -iname "*.samp"  -or -iname ".bnk" -or -iname "*.dsp" -or -iname "*.gsh" -or -iname "*.fsh" -or -iname "*.vsh" -or -iname "*.big" -or -iname *.abg -or -iname "*.bad" -or -iname "*.add" -o -iname "*.adb" -o -iname "*.fs" \) -exec rm {} -f \;'
 #        alias filterTextFiles='grep -Elis "__start|msl_c|MetroTRK|jsystem|#!/bin|\b[a-zA-Z]{6,}\.(cpp|hpp|a|o|c|h)\b([\"\'> \n])|text section layout" *.map *.txt *.ini *.xml *.cfg | xargs -I{} rm -f {} 2>/dev/null'
 	alias filterFind='find . -type f | grep -Elvis "ppceabi|metrotrk|metrowerks|msl_c|text section layout|([a-z]|[A-Z]){5,}\.(cpp|hpp|a|o|c|h)\b$" . | xargs -I{} rm -f {}'
@@ -19,7 +19,7 @@
         echo "# OK, now index for filenames, download and process everything ..."
         cat index.html | grep .zip | sed 's/\" title.*//' | sed 's/.*href=\"//' | while read -r zip_file; do
           echo ">> Fetching next game ..." && \
-          wget -q --show-progress --progress=bar:giga "$link_prefix/$zip_file" & PID=$! && \
+          wget -c -q --show-progress --progress=bar:giga "$link_prefix/$zip_file" & PID=$! && \
 #	  sleep 1 && \
 	  filename=$(ls *.zip 2>/dev/null | head -n 1) && \
 	  file_name="${filename%.zip}" && \
@@ -45,15 +45,32 @@
           mkdir "$file_name" && \
           echo " # Extracting download ..." && \
           7z x "$filename" -y -bso0 -bsp0 -bse0 && \
-          rm "$filename" && \
+          #rm "$filename" && \
           rvz_file=$(ls *.rvz | head -n 1) && \
           echo " # Extracting game ..." && \
           dolphinTool extract -i "$rvz_file" -o "$file_name/" -q 2>/dev/null || true && \
           rm "$rvz_file" && \
           echo " # Run filter ..." && \
 
+	  mkdir -p wszstmp && \
+	  cd wszstmp && \
+#	  for i in {1..4}; do
+       	    wszst extract -i "../$file_name" -D "." -H -o -R -p --number > /dev/null 2>&1 || true;
+	    find . -iname "DOL.*header*" -delete;
+#	  done && \
+	 # echo "ABC!" > test.txt && \
+	 # find . -name "wszst*txt" -exec rm -f {} \; && \
+	 # rm -rf "../$file_name/" && \
+	 # mkdir "../$file_name/" && \
+	 # echo "AAA!" && \
+	  find . -maxdepth 1 -exec cp -rf {} "../$file_name/ \: 2>/dev/null || true && \
+          cd "../" && \
+	  rm -rf "wszstmp/" && \
+	 # echo "BCA!" && \
+
           rm -rf tmp && \
           mkdir -p tmp && \
+	  ls && \
           cd "$file_name" && \
           filterExt "../tmp/" \; && \
           for i in 1; do
@@ -116,18 +133,25 @@
             done;
 	  done && \
 
+	  cd .. && \
+
 	  mkdir -p wszstmp && \
 	  cd wszstmp && \
-	  for i in {1..5}; do
-       	    wszst extract -i "." -D "../wszstmp"  -o -R -p -H --number --in-order || true;
-	    find . -iname "DOL.*header*" -delete;
+#	  for i in {1..4}; do
+       	    wszst extract -i "../$file_name" -D "." -H -o -R -p --number > /dev/null 2>&1 || true;
+#	    find . -iname "DOL.*header*" -delete;
 	  done && \
-	  find . -name "wszst*txt" -exec rm -f {} \;
+	 # echo "1ABC!" > test.abc && \
+	 # find . -name "wszst*txt" -exec rm -f {} \; && \
 	 # rm -rf "../$file_name/" && \
 	 # mkdir "../$file_name/" && \
-	  cp -rf * "../$file_name/" 2>/dev/null && \
-          cd "../$file_name/" && \
-	  rm -rf "../wszstmp/" && \
+	 # echo "1AAA!" && \
+	  find . -maxdepth 1 -exec cp -rf "{}" "../$file_name/"Ã\; 2>/dev/null || true && \
+          cd "../" && \
+	  rm -rf "wszstmp/" && \
+	 # echo "1BCA!" && \
+
+	  cd "$file_name" && \
 
           filterTextFiles && \
           filterDelete && \
