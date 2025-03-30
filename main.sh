@@ -8,7 +8,7 @@
 #        alias filterTextFiles='grep -Elis "__start|msl_c|MetroTRK|jsystem|#!/bin|\b[a-zA-Z]{6,}\.(cpp|hpp|a|o|c|h)\b([\"\'> \n])|text section layout" *.map *.txt *.ini *.xml *.cfg | xargs -I{} rm -f {} 2>/dev/null'
 	alias filterFind='find . -type f | grep -Elvis "ppceabi|metrotrk|metrowerks|msl_c|text section layout|([a-z]|[A-Z]){5,}\.(cpp|hpp|a|o|c|h)\b$" . | xargs -I{} rm -f {}'
 	alias filterExt='find . -type f ! \( -iname "*apploader.img*" -o -iname "*.map*" -o -iname "*.rel*" -o -iname "*.elf*" -o -iname "*.exe*" -o -iname "*.txt" -o -iname "*.dol" -o -iname "*.sym" -o -iname "*.rsym" -o -iname "*.lua" -o -iname "*.rso" -o -iname "*.csv" -o -iname "*.dlf" -o -iname "*.sh" -o -iname "*.gci" -o -iname "*.sav*" -o -iname "*.tdf" -o -iname "*.inf" -o -iname "*.bat" -o -iname "*.scc" -o -iname "*.cfg" -o -iname "*.s" -o -iname "*.c" -o -iname "*.h" -o -iname "*.cpp" -o -iname "*.hpp" -o -iname "*.o" -o -iname "*.a" -o -iname "*.flb" -o -iname "*.xml" -o -iname "*.so" -o -iname "*.dll" -o -iname "*.*log*" -o -iname "*.ini" -o -iname "*.yml" -o -iname "*.yaml" -o -iname "*.json" -or -iname "*.py" -or -iname "*.exe" -o -iname "*makefile*" -o -iname "*cmake*" -o -iname "*.sln" -o -iname "*vsproj" -o -iname "*.mak" -o -iname "*.mk" \) -exec mv {}'
-        alias filterTextFiles='grep -Elvis "__start|msl_c|MetroTRK|jsystem|#!/bin|([a-z]|[A-Z]){5,}\.(cpp|hpp|a|o|c|h)\b$" *.ini *.Ini *.InI *.INI *.INi *.iNI *.iNi *.mAp *.tXt *.map *.Map *.MAP *.MAp *.MaP *.mAP *.maP *.Txt *.TXt *.TXT *.tXT *.txT *.TxT *.txt *.inf *.inF *.Inf *.INF *.InF *.INf *.iNF *.InF *.iNf *.log *.LOG *.loG *.LOg *.LoG *.lOg *.lOG *.xml *.XML *.Xml *.xML *.XMl *.XmL *.xML *.cfg *.cFg *.CFG *.CFg *.cFg *.CfG | xargs -I{} rm -f {} 2>/dev/null'
+        alias filterTextFiles='find . -type f \( -iname "*.txt" -o -iname "*.log" -o -iname "*.cfg" -o -iname "*.xml" -o -iname "*.ini" -o -iname "*.inf" -o -iname "*.map" \) -exec grep -Elvis "__start|msl_c|MetroTRK|jsystem|#!/bin|([a-z]|[A-Z]){5,}\.(cpp|hpp|a|o|c|h)\b$" {} \; | xargs -I{} rm -f {} 2>/dev/null'
 #	alias filterFind='find . -type f -exec grep -Elis "ppceabi|metrotrk|metrowerks|msl_c|text section layout|[a-zA-Z]{6,}\.(cpp|hpp|a|o|c|h)\b$" {} \; | xargs mv'
 #	alias dolphinTool='flatpak run --command="dolphin-tool" --filesystem host org.DolphinEmu.dolphin-emu'
 	alias dolphinTool='dolphin-tool'
@@ -19,7 +19,7 @@
         echo "# OK, now index for filenames, download and process everything ..."
         cat index.html | grep .zip | sed 's/\" title.*//' | sed 's/.*href=\"//' | while read -r zip_file; do
           echo ">> Fetching next game ..." && \
-          wget -c -q --show-progress --progress=bar:giga "$link_prefix/$zip_file" & PID=$! && \
+          wget -q --show-progress --progress=bar:giga "$link_prefix/$zip_file" & PID=$! && \
 #	  sleep 1 && \
 	  filename=$(ls *.zip 2>/dev/null | head -n 1) && \
 	  file_name="${filename%.zip}" && \
@@ -52,28 +52,23 @@
           rm "$rvz_file" && \
           echo " # Run filter ..." && \
 
-	  mkdir -p wszstmp && \
-	  cd wszstmp && \
+	  #mkdir -p wszstmp && \
+	  #cd wszstmp && \
 #	  for i in {1..4}; do
-       	    wszst extract -i "../$file_name" -D "." -H -o -R -p --number > /dev/null 2>&1 || true;
-	    find . -iname "DOL.*header*" -delete;
-#	  done && \
+       	   # wszst extract "../$file_name" -d "." -i -H -o -R -p --number > /dev/null 2>&1 || true;
+	  #  find . -iname "DOL.
 	 # echo "ABC!" > test.txt && \
 	 # find . -name "wszst*txt" -exec rm -f {} \; && \
 	 # rm -rf "../$file_name/" && \
 	 # mkdir "../$file_name/" && \
 	 # echo "AAA!" && \
-	  find . -maxdepth 1 -exec cp -rf {} "../$file_name/ \: 2>/dev/null || true && \
-          cd "../" && \
-	  rm -rf "wszstmp/" && \
-	 # echo "BCA!" && \
+	 #DELETED
 
           rm -rf tmp && \
           mkdir -p tmp && \
-	  ls && \
           cd "$file_name" && \
           filterExt "../tmp/" \; && \
-          for i in 1; do
+          for i in 1 2; do
 #	    echo "   DBG: Scan for archives, iteration $i: files: $(find .)" && \
 #	    for possible_archive_file in $(find "$possiblePath" -type f ! -path "*/sys/*" ! -iname "*opening.*bnr*"); do
 	    find "../tmp/" "." -type f ! -path "*/sys/*" ! \( -iname "*opening.bnr" -o -iname "*.bat" -o -iname "*.map" -o -iname "*.dll" -o -iname "*.exe" -o -iname "*.img" -o -iname "*.txt" -o -iname "*.csv" -o -iname "*.elf" -o -iname "*.dol" -o -iname "boot.bin" \) | while read -r possible_archive_file; do
@@ -83,15 +78,15 @@
               mkdir "files/$sub_file_name.d" -p && \
               #echo "  # Extracting sub..." && \
               dolphinTool extract -i "$possible_archive_file" -o "files/$sub_file_name.d" -q 2>/dev/null || true && \
-#              wszst extract "$possible_archive_file" -D "files/$sub_file_name.d" -o --dec -r -i -a > /dev/null 2>&1 || true && \
+              wszst extract "$possible_archive_file" -D "files/$sub_file_name.d" -o --dec -r -i -p > /dev/null 2>&1 || true && \
 	      if [ -z "$(ls -A "files/$sub_file_name.d")" ]; then
                 #echo "  ! No data found, continue";
                 rmdir "files/$sub_file_name.d";
                 continue;
-              fi && \
+              fi
 #	      ls "files" && ls "files/$sub_file_name.d" && \
-	      rm "$possible_archive_file" && \
-              echo "  # Extracted sub-archive: $possible_archive_file" #&& \
+#	      rm "$possible_archive_file" && \
+ #             echo "  # Extracted sub-archive: $possible_archive_file" #&& \
 	#      echo "    Extracting recursively ..." && \
         #      cd "$sub_file_name" && \
         #      find . -type f ! -path "*/sys/*" ! -iname "*opening.*bnr*" -exec sh -c '
@@ -133,25 +128,25 @@
             done;
 	  done && \
 
-	  cd .. && \
+#	  cd .. && \
 
-	  mkdir -p wszstmp && \
-	  cd wszstmp && \
+#	  mkdir -p wszstmp && \
+#	  cd wszstmp && \
 #	  for i in {1..4}; do
-       	    wszst extract -i "../$file_name" -D "." -H -o -R -p --number > /dev/null 2>&1 || true;
+#       	    wszst extract -i "../$file_name" -D "." -H -o -R -p --number > /dev/null 2>&1 || true;
 #	    find . -iname "DOL.*header*" -delete;
-	  done && \
+#	  done && \
 	 # echo "1ABC!" > test.abc && \
-	 # find . -name "wszst*txt" -exec rm -f {} \; && \
+	  find . -name "wszst*txt" -exec rm -f {} \; && \
 	 # rm -rf "../$file_name/" && \
 	 # mkdir "../$file_name/" && \
 	 # echo "1AAA!" && \
-	  find . -maxdepth 1 -exec cp -rf "{}" "../$file_name/"Ã\; 2>/dev/null || true && \
-          cd "../" && \
-	  rm -rf "wszstmp/" && \
+#	  find . -maxdepth 1 -exec cp -rf "{}" "../$file_name/"Ã\; 2>/dev/null || true && \
+ #         cd "../" && \
+#	  rm -rf "wszstmp/" && \
 	 # echo "1BCA!" && \
 
-	  cd "$file_name" && \
+#	  cd "$file_name" && \
 
           filterTextFiles && \
           filterDelete && \
