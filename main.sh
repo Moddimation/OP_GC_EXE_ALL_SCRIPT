@@ -98,7 +98,6 @@
               echo "    Found:" && \
               ls "../tmp/$sub_file_name" -m
           done && \
-	  echo " # Post processing ..." && \
           filterFind "../tmp/" && \
           if ! rmdir --ignore-fail-on-non-empty "../tmp/"; then 
             echo " ! No code data found.";
@@ -108,6 +107,7 @@
             rm -rf "$file_name";
             continue;
           fi && \
+	  echo " # Post-Processing ..." && \
           ignored=$(find . -type f | awk -F. '{if (NF>1) print $NF}' | sort -u | paste -sd "," - ) && \
           rm -rf ./* && \
           cd ../tmp && \
