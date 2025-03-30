@@ -63,9 +63,8 @@
               echo "  # Extracting sub..." && \
               dolphinTool extract -i "$possible_archive_file" -o "$sub_file_name" -q || true && \
               rm "$possible_archive_file" && \
-              if [ -z "$(ls -A '$sub_file_name' 2>/dev/null)" ]; then
+              if rmdir --ignore-fail-on-non-empty '$sub_file_name'; then
                 echo "  ! No data found, continue";
-                rm -rf "$sub_file_name";
                 rm -rf "../tmp/$sub_file_name";
                 continue; 
               fi && \
@@ -75,10 +74,8 @@
 		possible_sub_archive=$(basename "$1") 
 		mkdir $possible_sub_archive 
 		dolphinTool extract -i "$1" -o "$possible_sub_archive" -q || true \;
-                fileList=$(ls -A "$possible_sub_archive")
-      		if [ -z "$fileList" ]; then
-		  rmdir "$possible_sub_archive"
-                else
+                isArchive=$(rmdir "$possible_sub_archive")
+      		if ! rmdir --ignore-fail-on-non-empty "$possible_sub_archive"; then
 		  rm "$1" -f
 		fi
 	      ' _ {} \; && \
@@ -91,9 +88,8 @@
               filterDelete && \
               cd "../../$file_name" && \
               rm -rf "$sub_file_name" && \
-              if [ -z "$(ls -A "../tmp/$sub_file_name")" ]; then
+              if ! rmdir "../tmp/$sub_file_name"; then
                 echo "  ! No code data found, continuing";
-                rmdir "../tmp/$sub_file_name";
                 continue;
               fi && \
               echo "  < Finished '$file_name/$sub_file_name'" && \
@@ -104,11 +100,10 @@
           done && \
 	  echo " # Post processing ..." && \
           filterFind "../tmp/" && \
-          if [ -z "$(ls -A ../tmp/)" ]; then 
+          if ! rmdir --ignore-fail-on-non-empty ../tmp/"; then 
             echo " ! No code data found.";
             echo "   Continuing, current size:";
             du -sh .;
-            rm -rf ../tmp/*;
             cd ..;
             rm -rf "$file_name";
             continue;
