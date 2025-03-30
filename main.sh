@@ -66,7 +66,7 @@
               echo "  # Extracting sub..." && \
               dolphinTool extract -i "$possible_archive_file" -o "$sub_file_name" -q 2>/dev/null || true && \
               rm "$possible_archive_file" && \
-              if rmdir --ignore-fail-on-non-empty "$sub_file_name"; then
+              if ! rmdir --ignore-fail-on-non-empty "$sub_file_name"; then
                 echo "  ! No data found, continue";
                 rm -rf "../tmp/$sub_file_name";
                 continue;
@@ -80,7 +80,7 @@
 		shopt -u extglob
 		mkdir "$possible_sub_archive_name"
 		dolphin-tool extract -i "$1" -o "$possible_sub_archive_name" -q 2>/dev/null || true \;
-      		if ! rmdir --ignore-fail-on-non-empty "$possible_sub_archive_name"; then
+      		if rmdir --ignore-fail-on-non-empty "$possible_sub_archive_name"; then
 		  rm "$1" -f
 		fi
 	      ' _ {} \; && \
@@ -99,7 +99,7 @@
               fi && \
               echo "  < Finished '$file_name/$sub_file_name'" && \
               echo "    Ignored:" && \
-              echo $ignored && \
+              echo "$ignored" && \
               echo "    Found:" && \
               ls "../tmp/$sub_file_name" -m
           done && \
