@@ -3,7 +3,7 @@
 #        sudo flatpak install flathub org.DolphinEmu.dolphin-emu -y
 	echo "# Clearing old files ..."
 #	sh clean.sh
-	rm index.* *.zip.* *.rvz* -f
+	rm index.* *.zip* *.rvz* -f
         alias filterDelete='find . -type f \( -iname "*.gct" -or -iname "*.gfn" -or -iname "*.bnr" -or -iname "*.h4m" -or -iname "*.sni" -or -iname "*.gsf" -or -iname "*.zsd" -or -iname "*.thp" -or -iname "*.mpc" -or -iname "*.bmd" -or -iname "*.fpk" -or -iname "*.viv" -or -iname "*.ngc" -or -iname "*.div" -or -iname "*.vid" -or -iname "*.vp*" -or -iname "*.sp" -or -iname "*.str" -or -iname "*.mus" -or -iname "*.flo" -or -iname "*.exa" -or -iname "*.ssd" -or -iname "*.sbf" -or -iname "*.spe" -or -iname "*.dat" -or -iname "*.sdt" -or -iname "*.lmp" -or -iname "*.feb" -or -iname "*.bin" -or -iname "*.dat" -or -iname "*.obj" -or -iname "*.lfb" -or -iname "*.med" -or -iname "*.samp"  -or -iname ".bnk" -or -iname "*.dsp" -or -iname "*.gsh" -or -iname "*.fsh" -or -iname "*.vsh" -or -iname "*.big" -or -iname *.abg -or -iname "*.bad" -or -iname "*.add" -o -iname "*.adb" -o -iname "*.fs" \) -exec rm {} -f \;'
 #        alias filterTextFiles='grep -Elis "__start|msl_c|MetroTRK|jsystem|#!/bin|\b[a-zA-Z]{6,}\.(cpp|hpp|a|o|c|h)\b([\"\'> \n])|text section layout" *.map *.txt *.ini *.xml *.cfg | xargs -I{} rm -f {} 2>/dev/null'
 	alias filterFind='find . -type f | grep -Elvis "ppceabi|metrotrk|metrowerks|msl_c|text section layout|([a-z]|[A-Z]){5,}\.(cpp|hpp|a|o|c|h)\b$" . | xargs -I{} rm -f {}'
@@ -40,8 +40,13 @@
             echo "   Continue, current size: $(du -sh .)";
             continue;
 	  fi && \
-          filename=$(ls *.zip | head -n 1) && \
-          file_name="${filename%.zip}" && \
+         # filename=$(ls *.zip | head -n 1) && \
+         # file_name="${filename%.zip}" && \
+	  if [ -d "$file_name" ]; then
+	    echo " # NVM, exists, skipping.";
+	    rm "$filename";
+	    continue;
+	  fi
           mkdir "$file_name" && \
           echo " # Extracting download ..." && \
           7z x "$filename" -y -bso0 -bsp0 -bse0 && \
@@ -64,17 +69,19 @@
 	 # echo "AAA!" && \
 	 #DELETED
 
+	  echo "  # Extracting sub archives ..."
+
           rm -rf tmp && \
           mkdir -p tmp && \
           cd "$file_name" && \
-          filterExt "../tmp/" \; && \
+#          filterExt "../tmp/" \; && \
           for i in 1 2; do
 #	    echo "   DBG: Scan for archives, iteration $i: files: $(find .)" && \
 #	    for possible_archive_file in $(find "$possiblePath" -type f ! -path "*/sys/*" ! -iname "*opening.*bnr*"); do
 	    find "../tmp/" "." -type f ! -path "*/sys/*" ! \( -iname "*opening.bnr" -o -iname "*.bat" -o -iname "*.map" -o -iname "*.dll" -o -iname "*.exe" -o -iname "*.img" -o -iname "*.txt" -o -iname "*.csv" -o -iname "*.elf" -o -iname "*.dol" -o -iname "boot.bin" \) | while read -r possible_archive_file; do
               sub_file_name="$(basename "$possible_archive_file" | sed 's/\.[^.]*$//')" && \
 #              echo "  > Found sub-game: '$possibe_archive_file'" && \
-#              mkdir "../tmp/$sub_file_name" -p && \
+             # mkdir "../tmp/$sub_file_name" -p && \
               mkdir "files/$sub_file_name.d" -p && \
               #echo "  # Extracting sub..." && \
               dolphinTool extract -i "$possible_archive_file" -o "files/$sub_file_name.d" -q 2>/dev/null || true && \
@@ -83,10 +90,10 @@
                 #echo "  ! No data found, continue";
                 rmdir "files/$sub_file_name.d";
                 continue;
-              fi
+              fi # && \
 #	      ls "files" && ls "files/$sub_file_name.d" && \
 #	      rm "$possible_archive_file" && \
- #             echo "  # Extracted sub-archive: $possible_archive_file" #&& \
+           #   echo "  # Extracted sub-archive: $possible_archive_file" && \
 	#      echo "    Extracting recursively ..." && \
         #      cd "$sub_file_name" && \
         #      find . -type f ! -path "*/sys/*" ! -iname "*opening.*bnr*" -exec sh -c '
@@ -108,25 +115,32 @@
 	#	  #echo "   DBG: is empty: $possible_sub_archive_name.d from $1"
 	#	fi
 	#      ' _ {} \; && \
-	     # filterExt "../../tmp/$sub_file_name/" \; && \
-	      #echo "  # Post processing ..." && \
-	     # filterTextFiles && \
-             # filterDelete && \
-	      #ignored=$(find . -type f | awk -F. '{if (NF>1) print $NF}' | sort -u | paste -sd "," - ) && \
-             # cd "../../tmp/$sub_file_name" && \
-             # filterFind "../../$file_name/$sub_file_name/" && \
-             # cd "../../$file_name" && \
-              #if rmdir "../tmp/$sub_file_name" 2>/dev/null; then
-              #  echo "  ! No code data found, continuing";
-              #  continue;
-              #fi && \
-              #echo "  < Finished '$file_name/$sub_file_name'" && \
-              #echo "    Ignored:" && \
-              #echo "$ignored" && \
-              #echo "    Found:" && \
-              #ls "../tmp/$sub_file_name" -m && \
+#	      cd "$sub_file_name.d" && \
+#	      echo "  # Run Filter ..." && \
+#	      filterExt "../../tmp/$sub_file_name/" \; && \
+#	      echo "  # Post processing ..." && \
+#	      filterTextFiles && \
+ #             filterDelete && \
+#	  #    ignored=$(find . -type f | awk -F. '{if (NF>1) print $NF}' | sort -u | paste -sd "," - ) && \
+ #             cd "../../tmp/$sub_file_name" && \
+  #            filterFind "../../$file_name/$sub_file_name.d/" && \
+#	      ignored=$(find . -type f | awk -F. '{if (NF>1) print $NF}' | sort -u | paste -sd "," - ) && \
+ #             cd "../../$file_name" && \
+  #            if rmdir "../tmp/$sub_file_name" 2>/dev/null; then
+   #             echo "  ! No code data found, continuing";
+    #            continue;
+     #         fi && \
+      #        echo "  < Finished '$file_name/$sub_file_name'" && \
+       #       echo "    Ignored:" && \
+        #      echo "$ignored" && \
+         #     echo "    Found:" && \
+          #    ls "$sub_file_name.d" -m 
             done;
 	  done && \
+
+	  echo "  # Cutting files ..." && \
+
+	  filterExt "../tmp/" \; && \
 
 #	  cd .. && \
 
@@ -137,7 +151,7 @@
 #	    find . -iname "DOL.*header*" -delete;
 #	  done && \
 	 # echo "1ABC!" > test.abc && \
-	  find . -name "wszst*txt" -exec rm -f {} \; && \
+	  find . -name "wszst*txt" -exec rm -f "{}" \; && \
 	 # rm -rf "../$file_name/" && \
 	 # mkdir "../$file_name/" && \
 	 # echo "1AAA!" && \
@@ -174,3 +188,4 @@
         done
         find . -type d -empty -delete
         echo "# Done! Successfully got code data from every Gamecube game."
+	./main.sh
