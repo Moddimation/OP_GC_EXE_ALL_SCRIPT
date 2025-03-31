@@ -50,7 +50,7 @@
           mkdir "$file_name" && \
           echo " # Extracting download ..." && \
           7z x "$filename" -y -bso0 -bsp0 -bse0 && \
-          #rm "$filename" && \
+          rm "$filename" && \
           rvz_file=$(ls *.rvz | head -n 1) && \
           echo " # Extracting game ..." && \
           dolphinTool extract -i "$rvz_file" -o "$file_name/" -q 2>/dev/null || true && \
@@ -176,11 +176,11 @@
             continue;
           fi && \
           ignored=$(find . -type f | awk -F. '{if (NF>1) print $NF}' | sort -u | paste -sd "," - ) && \
+	  cd ".." && \
 	  rm -rf tmp && \
           echo "<< Finished '$file_name'" && \
           echo "   Ignored:" && \
 	  echo "$ignored" && \
-          cd .. && \
           echo "   Found:" && \
           find "$file_name" -type f && \
           echo " # Continuing, current size:" && \
