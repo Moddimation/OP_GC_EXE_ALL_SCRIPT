@@ -4,6 +4,7 @@
 	echo "# Clearing old files ..."
 #	sh clean.sh
 	rm index.* *.zip* *.rvz* -f
+	rm -rf tmp
         alias filterDelete='find . -type f \( -iname "vssver.scc" -o -iname "*.gct" -or -iname "*.gfn" -or -iname "*.bnr" -or -iname "*.h4m" -or -iname "*.sni" -or -iname "*.gsf" -or -iname "*.zsd" -or -iname "*.thp" -or -iname "*.mpc" -or -iname "*.bmd" -or -iname "*.fpk" -or -iname "*.viv" -or -iname "*.ngc" -or -iname "*.div" -or -iname "*.vid" -or -iname "*.vp*" -or -iname "*.sp" -or -iname "*.str" -or -iname "*.mus" -or -iname "*.flo" -or -iname "*.exa" -or -iname "*.ssd" -or -iname "*.sbf" -or -iname "*.spe" -or -iname "*.dat" -or -iname "*.sdt" -or -iname "*.lmp" -or -iname "*.feb" -or -iname "*.bin" -or -iname "*.dat" -or -iname "*.obj" -or -iname "*.lfb" -or -iname "*.med" -or -iname "*.samp"  -or -iname ".bnk" -or -iname "*.dsp" -or -iname "*.gsh" -or -iname "*.fsh" -or -iname "*.vsh" -or -iname "*.big" -or -iname *.abg -or -iname "*.bad" -or -iname "*.add" -o -iname "*.adb" -o -iname "*.fs" \) -delete'
 #        alias filterTextFiles='grep -Elis "__start|msl_c|MetroTRK|jsystem|#!/bin|\b[a-zA-Z]{6,}\.(cpp|hpp|a|o|c|h)\b([\"\'> \n])|text section layout" *.map *.txt *.ini *.xml *.cfg | xargs -I{} rm -f {} 2>/dev/null'
 	alias filterFind='find . -type f | grep -Elvis "ppceabi|metrotrk|metrowerks|msl_c|text section layout|([a-z]|[A-Z]){5,}\.(cpp|hpp|a|o|c|h)\b$" . | xargs -I{} rm -f {}'
@@ -40,9 +41,7 @@
             echo "   Continuing, size: $(du -sh "$file_name" | awk '{print $1}') / $(du -sh . | awk '{print $1}')";
             continue;
 	  fi && \
-         # filename=$(ls *.zip | head -n 1) && \
-         # file_name="${filename%.zip}" && \
-	  if [ -d "$file_name" ]; then
+    	  if [ -d "$file_name" ]; then
 	    echo " # NVM, exists, skipping.";
 	    rm "$filename";
 	    continue;
@@ -57,28 +56,18 @@
           rm "$rvz_file" && \
           echo " # Run filter ..." && \
 
-	  #mkdir -p wszstmp && \
-	  #cd wszstmp && \
-#	  for i in {1..4}; do
-       	   # wszst extract "../$file_name" -d "." -i -H -o -R -p --number > /dev/null 2>&1 || true;
-	  #  find . -iname "DOL.
-	 # echo "ABC!" > test.txt && \
-	 # find . -name "wszst*txt" -exec rm -f {} \; && \
-	 # rm -rf "../$file_name/" && \
-	 # mkdir "../$file_name/" && \
-	 # echo "AAA!" && \
-	 #DELETED
-
 	  echo "  # Extracting sub archives ..."
 
           rm -rf tmp && \
           mkdir -p tmp && \
           cd "$file_name" && \
-#          filterExt "../tmp/" \; && \
           for i in 1 2; do
 #	    echo "   DBG: Scan for archives, iteration $i: files: $(find .)" && \
+# 
 #	    for possible_archive_file in $(find "$possiblePath" -type f ! -path "*/sys/*" ! -iname "*opening.*bnr*"); do
-	    find "../tmp/" "." -type f ! -path "*/sys/*" ! \( -iname "*.geo" -o -iname "vssver.scc" -o -iname "*.lvl" -o -iname "*opening.bnr" -o -iname "*.tpl" -o -iname "*.mtl"  -o -iname "*.bat" -o -iname "*.map" -o -iname "*.dll" -o -iname "*.exe" -o -iname "*.img" -o -iname "*.txt" -o -iname "*.csv" -o -iname "*.elf" -o -iname "*.dol" -o -iname "boot.bin" \) | while read -r possible_archive_file; do
+	    find "../tmp/" "." -type f \
+	! \( -ipath "*level*" -o -ipath "*lvl*" -o -ipath "*course*" -o -ipath "*/sys/*" -o -ipath "*obj*" -o -ipath "*snd*" -o -ipath "*sound*" -o -ipath "*spr*" \) \
+	! \( -iname "*level*" -o -iname "*.thp" -o -iname "*lvl" -o -iname "*.stf" -o -iname "*.tsc" -o -iname "*.ani" -o -iname "*.col" -o -iname "*scb" -o -iname "*.adp" -o -iname "*.all" -o -iname "*.geo" -o -iname "vssver.scc" -o -iname "*.lvl" -o -iname "*opening.bnr" -o -iname "*.tpl" -o -iname "*.mtl"  -o -iname "*.bat" -o -iname "*.map" -o -iname "*.dll" -o -iname "*.exe" -o -iname "*.img" -o -iname "*.txt" -o -iname "*.csv" -o -iname "*.elf" -o -iname "*.dol" -o -iname "boot.bin" \) | while read -r possible_archive_file; do
               sub_file_name="$(basename "$possible_archive_file" | sed 's/\.[^.]*$//')" && \
               echo "  > Found sub-game: '$possible_archive_file'" && \
              # mkdir "../tmp/$sub_file_name" -p && \
