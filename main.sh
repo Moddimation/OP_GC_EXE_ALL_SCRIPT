@@ -80,7 +80,7 @@
 #	    for possible_archive_file in $(find "$possiblePath" -type f ! -path "*/sys/*" ! -iname "*opening.*bnr*"); do
 	    find "../tmp/" "." -type f ! -path "*/sys/*" ! \( -iname "*.geo" -o -iname "vssver.scc" -o -iname "*.lvl" -o -iname "*opening.bnr" -o -iname "*.tpl" -o -iname "*.mtl"  -o -iname "*.bat" -o -iname "*.map" -o -iname "*.dll" -o -iname "*.exe" -o -iname "*.img" -o -iname "*.txt" -o -iname "*.csv" -o -iname "*.elf" -o -iname "*.dol" -o -iname "boot.bin" \) | while read -r possible_archive_file; do
               sub_file_name="$(basename "$possible_archive_file" | sed 's/\.[^.]*$//')" && \
-              echo "  > Found sub-game: '$possibe_archive_file'" && \
+              echo "  > Found sub-game: '$possible_archive_file'" && \
              # mkdir "../tmp/$sub_file_name" -p && \
               mkdir "files/$sub_file_name.d" -p && \
              # echo "  # Extracting sub..." && \
