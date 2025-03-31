@@ -1,0 +1,2 @@
+main:
+	@sh main.sh
