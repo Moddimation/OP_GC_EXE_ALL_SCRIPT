@@ -6,10 +6,10 @@
 #	sh clean.sh
 	rm index.* *.zip* *.rvz* -f
 	rm -rf tmp
-        alias filterDelete='find . -type f \(-iname "*.gma" -o -iname "*.vtx" -o -iname "*.*gfx*" -o -iname "*.gcp" -o -iname "*.lfh" -o -iname "*.lfa" -o -iname "*.lfg" -o -iname "*.bnk" -o -iname "*.dtm" -o -iname "*anim*" -o -iname "*.tga" -o -iname "*.shf" -o -iname "*.shg" -o -iname "*.gct" -o -iname "*.ngc" -o -iname "*.gsf" -o -iname "*.spt" -o -iname "*.loc" -o -iname "*.gdf" -o -iname "*.tex" -o -iname "*.bmd" -o -iname "*.*pcm*" -o -iname "*.mid" -o -iname "*.dsp" -o -iname "vssver.scc" -o -iname "*.gct" -or -iname "*.gfn" -or -iname "*.bnr" -or -iname "*.h4m" -or -iname "*.sni" -or -iname "*.gsf" -or -iname "*.zsd" -or -iname "*.thp" -or -iname "*.mpc" -or -iname "*.bmd" -or -iname "*.fpk" -or -iname "*.viv" -or -iname "*.ngc" -or -iname "*.div" -or -iname "*.vid" -or -iname "*.vp*" -or -iname "*.sp" -or -iname "*.str" -or -iname "*.mus" -or -iname "*.flo" -or -iname "*.exa" -or -iname "*.ssd" -or -iname "*.sbf" -or -iname "*.spe" -or -iname "*.dat" -or -iname "*.sdt" -or -iname "*.lmp" -or -iname "*.feb" -or -iname "*.bin" -or -iname "*.dat" -or -iname "*.obj" -or -iname "*.lfb" -or -iname "*.med" -or -iname "*.samp"  -or -iname ".bnk" -or -iname "*.dsp" -or -iname "*.gsh" -or -iname "*.fsh" -or -iname "*.vsh" -or -iname "*.big" -or -iname *.abg -or -iname "*.bad" -or -iname "*.add" -o -iname "*.adb" -o -iname "*.fs" \) -delete 2>/dev/null || true'
+        alias filterDelete='find . -type f \( -iname "*.adx" -o -iname "*.gma" -o -iname "*.vtx" -o -iname "*.*gfx*" -o -iname "*.gcp" -o -iname "*.lfh" -o -iname "*.lfa" -o -iname "*.lfg" -o -iname "*.bnk" -o -iname "*.dtm" -o -iname "*anim*" -o -iname "*.tga" -o -iname "*.shf" -o -iname "*.shg" -o -iname "*.gct" -o -iname "*.ngc" -o -iname "*.gsf" -o -iname "*.spt" -o -iname "*.loc" -o -iname "*.gdf" -o -iname "*.tex" -o -iname "*.bmd" -o -iname "*.*pcm*" -o -iname "*.mid" -o -iname "*.dsp" -o -iname "vssver.scc" -o -iname "*.gct" -or -iname "*.gfn" -or -iname "*.bnr" -or -iname "*.h4m" -or -iname "*.sni" -or -iname "*.gsf" -or -iname "*.zsd" -or -iname "*.thp" -or -iname "*.mpc" -or -iname "*.bmd" -or -iname "*.fpk" -or -iname "*.viv" -or -iname "*.ngc" -or -iname "*.div" -or -iname "*.vid" -or -iname "*.vp*" -or -iname "*.sp" -or -iname "*.str" -or -iname "*.mus" -or -iname "*.flo" -or -iname "*.exa" -or -iname "*.ssd" -or -iname "*.sbf" -or -iname "*.spe" -or -iname "*.dat" -or -iname "*.sdt" -or -iname "*.lmp" -or -iname "*.feb" -or -iname "*.bin" -or -iname "*.dat" -or -iname "*.obj" -or -iname "*.lfb" -or -iname "*.med" -or -iname "*.samp"  -or -iname ".bnk" -or -iname "*.dsp" -or -iname "*.gsh" -or -iname "*.fsh" -or -iname "*.vsh" -or -iname "*.big" -or -iname *.abg -or -iname "*.bad" -or -iname "*.add" -o -iname "*.adb" -o -iname "*.fs" \) -delete 2>/dev/null || true'
 #        alias filterTextFiles='grep -Elis "__start|msl_c|MetroTRK|jsystem|#!/bin|\b[a-zA-Z_-$@]{6,}\.(cpp|hpp|a|o|c|h)\b([\"\'> \n])|text section layout" *.map *.txt *.ini *.xml *.cfg | xargs -I{} rm -f {} 2>/dev/null'
 	alias filterFind='find . -type f -exec grep -ELis "0x[0-9a-fA-F]{8,}|ppceabi|metrotrk|metrowerks|msl_c|section layout|3DPanel|.text|.data|.rodata|.sbss|.bss|([a-z_$@.-]|[A-Z_$@.-]){5,}\.(cpp|hpp|a|o|c|h)[^a-zA-Z]$" "{}" \; | xargs -I "{}" rm -f "{}" 2>/dev/null || true'
-	alias filterExt='find . -type f ! \( -iname "*.dmp" -o -iname "*.fld*" -o -iname "*.run" -o -iname "*.xls*" -o -iname "*.bpr*" -o -iname "*.ddf*" -o -iname "*.mdl*" -o -iname "*.img*" -o -iname "*.map*" -o -iname "*.rel*" -o -iname "*.elf*" -o -iname "*.exe*" -o -iname "*.txt*" -o -iname "*.dol*" -o -iname "*.*sym*" -o -iname "*.lua*" -o -iname "*.rso*" -o -iname "*.csv*" -o -iname "*.dlf*" -o -iname "*.sh*" -o -iname "*.gci*" -o -iname "*.sav*" -o -iname "*.tdf*" -o -iname "*.inf*" -o -iname "*.bat*" -o -iname "*readme*" -o -iname "*.doc*" -o -iname "*.cfg*" -o -iname "*.s" -o -iname "*.s.*" -o -iname "*.c" -o -iname "*.c.*" -o -iname "*.h" -o -iname "*.h.*" -o -iname "*.cpp" -o -iname "*.hpp" -o -iname "*.o" -o -iname "*.o.*" -o -iname "*.a" -o -iname "*.a.*" -o -iname "*.flb*" -o -iname "*.xml*" -o -iname "*.so*" -o -iname "*.dll*" -o -iname "*.*log*" -o -iname "*.ini*" -o -iname "*.pdf*" -o -iname "*.yml*" -o -iname "*.yaml*" -o -iname "*.json*" -or -iname "*.py*" -or -iname "*.exe*" -o -iname "*makefile*" -o -iname "*cmake*" -o -iname "*.sln*" -o -iname "*vsproj*" -o -iname "*.mak" -o -iname "*.mk" \) -exec mv "{}"'
+	alias filterExt='find . -type f ! \( -iname "*.dmp" -o -iname "*.fld*" -o -iname "*.run" -o -iname "*.xls*" -o -iname "*.bpr*" -o -iname "*.ddf*" -o -iname "*.mdl*" -o -iname "*.img*" -o -iname "*.map*" -o -iname "*.rel*" -o -iname "*.elf*" -o -iname "*.exe*" -o -iname "*.txt*" -o -iname "*.dol*" -o -iname "*.*sym*" -o -iname "*.lua*" -o -iname "*.rso*" -o -iname "*.csv*" -o -iname "*.dlf*" -o -iname "*.sh" -o -iname "*.gci*" -o -iname "*.sav*" -o -iname "*.tdf*" -o -iname "*.inf*" -o -iname "*.bat*" -o -iname "*readme*" -o -iname "*.doc*" -o -iname "*.cfg*" -o -iname "*.s" -o -iname "*.s.*" -o -iname "*.c" -o -iname "*.c.*" -o -iname "*.h" -o -iname "*.h.*" -o -iname "*.cpp" -o -iname "*.hpp" -o -iname "*.o" -o -iname "*.o.*" -o -iname "*.a" -o -iname "*.a.*" -o -iname "*.flb*" -o -iname "*.xml*" -o -iname "*.so" -o -iname "*.dll*" -o -iname "*.*log*" -o -iname "*.ini*" -o -iname "*.pdf*" -o -iname "*.yml*" -o -iname "*.yaml*" -o -iname "*.json*" -or -iname "*.py" -or -iname "*.exe*" -o -iname "*makefile*" -o -iname "*cmake*" -o -iname "*.sln*" -o -iname "*vsproj*" -o -iname "*.mak" -o -iname "*.mk" \) -exec mv "{}"'
 	alias filterTextFiles='find . -type f \( -iname "*.csv" -o -iname "*.txt" -o -iname "*.log" -o -iname "*.cfg" -o -iname "*.xml" -o -iname "*.ini" -o -iname "*.inf" -o -iname "*.map" \)  -exec grep -ELis "__start|msl_c|MetroTRK|jsystem|([a-z_.-]|[A-Z_.-]){6,}\.(cpp|hpp|a|o|c|h)[^a-zA-Z]$|section layout|\.text|.rodata|.bss|.sbss" "{}" \; | xargs -I "{}" rm -f "{}" 2>/dev/null || true'
 #        alias filterTextFiles='find . -type f -exec grep -ELis "0x[0-9a-fA-F]{8,}|__start|msl_c|MetroTRK|jsystem|#!/bin|([a-z_.-]|[A-Z_.-]){6,}\.(cpp|hpp|a|o|c|h)[^a-zA-Z]$|section layout|.text" --binary-files=text -a {} \; | xargs -I{} rm -f {}'
 #  	 alias filterFind='find . -type f -exec grep -Elis "ppceabi|metrotrk|metrowerks|msl_c|text section layout|[a-zA-Z_-$@]{6,}\.(cpp|hpp|a|o|c|h)\b$" {} \; | xargs mv'
@@ -20,6 +20,8 @@
 	echo "# Getting index ..."
 	wget -q "$link/"
 	echo "# OK, now index for filenames, download and process everything ..."
+	folderNum="$(find . -mindepth 1 -maxdepth 1 -type d | wc -l)"
+	echo "# Current number of games: $folderNum"
         cat index.html | grep .zip | sed 's/\" title.*//' | sed 's/.*href=\"//' | while read -r zip_file; do
 	  if [[ "$zip_file" == *"Action"*"Replay"* ]]; then
 	    continue;
@@ -61,10 +63,11 @@
           echo " # Run filter ..." && \
 	  echo "  # Scan for sub archives ..." && \
 
+	  filterDelete && \
+
           rm -rf tmp && \
           mkdir -p tmp && \
           for i in 1 2 3; do
-	    filterDelete && \
 	    filterTextFiles && \
 	    echo "   # Scan iteration $i" && \
 # 
@@ -89,6 +92,8 @@
 		dtk rarc extract "$possible_archive_file" -o "$extracted_dir" > /dev/null 2>&1 || true && \
 		dtk u8 extract "$possible_archive_file" -o "$extracted_dir" > /dev/null 2>&1 || true && \
 		dtk wad extract "$possible_archive_file" -o "$extracted_dir" > /dev/null 2>&1 || true && \
+		tar -xf "$possibble_archive_file" -C "$extracted_dir" > /dev/null 2>&1 || true && \
+		7z x "$possible_archive_file" -o"$extracted_dir" > /dev/null 2>&1 || true && \
 	      #find "$file_name" -name "wszst-setup.txt" -type f -delete 2>/dev/null || true && \
 	      if [ -z  "$(ls -A "$extracted_dir")" ] ; then
        #         echo "   ! No data found, continue";
@@ -145,13 +150,21 @@
 
 	  cd "$file_name" && \
 
+	  pathMainD="$(find . -type d -name "main.d")"
+	  if ! [ -z "$pathMainD" ]; then
+	    if [ -z "$(cmp "$pathMainD/sys/main.dol" "./sys/main.dol")" ]; then
+	      cp -rf "$pathMainD/*" ".";
+	      rm -rf "$pathMainD"
+	    fi
+	  fi && \
+
 	  echo "  # Cutting files ..." && \
 
 	  filterExt "../tmp/" \; && \
           filterTextFiles && \
 	  cd "../tmp/" && \
 	  echo " # Post-Processing ..." && \
-          filterFind "../$file_name/files/" && \
+          filterFind "../$file_name/files/" > /dev/null 2>&1 || true && \
 	  filterTextFiles && \
 	  find "../$file_name" -empty -delete && \
           if rmdir "../$file_name" 2>/dev/null; then
