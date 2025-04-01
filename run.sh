@@ -6,7 +6,7 @@
 #	sh clean.sh
 	rm index.* *.zip* *.rvz* -f
 	rm -rf tmp
-        alias filterDelete='find . -type f \( -iname "*.adx" -o -iname "*.gma" -o -iname "*.vtx" -o -iname "*.*gfx*" -o -iname "*.gcp" -o -iname "*.lfh" -o -iname "*.lfa" -o -iname "*.lfg" -o -iname "*.bnk" -o -iname "*.dtm" -o -iname "*anim*" -o -iname "*.tga" -o -iname "*.shf" -o -iname "*.shg" -o -iname "*.gct" -o -iname "*.ngc" -o -iname "*.gsf" -o -iname "*.spt" -o -iname "*.loc" -o -iname "*.gdf" -o -iname "*.tex" -o -iname "*.bmd" -o -iname "*.*pcm*" -o -iname "*.mid" -o -iname "*.dsp" -o -iname "vssver.scc" -o -iname "*.gct" -or -iname "*.gfn" -or -iname "*.bnr" -or -iname "*.h4m" -or -iname "*.sni" -or -iname "*.gsf" -or -iname "*.zsd" -or -iname "*.thp" -or -iname "*.mpc" -or -iname "*.bmd" -or -iname "*.fpk" -or -iname "*.viv" -or -iname "*.ngc" -or -iname "*.div" -or -iname "*.vid" -or -iname "*.vp*" -or -iname "*.sp" -or -iname "*.str" -or -iname "*.mus" -or -iname "*.flo" -or -iname "*.exa" -or -iname "*.ssd" -or -iname "*.sbf" -or -iname "*.spe" -or -iname "*.dat" -or -iname "*.sdt" -or -iname "*.lmp" -or -iname "*.feb" -or -iname "*.bin" -or -iname "*.dat" -or -iname "*.obj" -or -iname "*.lfb" -or -iname "*.med" -or -iname "*.samp"  -or -iname ".bnk" -or -iname "*.dsp" -or -iname "*.gsh" -or -iname "*.fsh" -or -iname "*.vsh" -or -iname "*.big" -or -iname *.abg -or -iname "*.bad" -or -iname "*.add" -o -iname "*.adb" -o -iname "*.fs" \) -delete 2>/dev/null || true'
+        alias filterDelete='find . -type f \( -iname "*.rdt" -o -iname "*.tim" -o -iname "*.adx" -o -iname "*.gma" -o -iname "*.vtx" -o -iname "*.*gfx*" -o -iname "*.gcp" -o -iname "*.lfh" -o -iname "*.lfa" -o -iname "*.lfg" -o -iname "*.bnk" -o -iname "*.dtm" -o -iname "*anim*" -o -iname "*.tga" -o -iname "*.shf" -o -iname "*.shg" -o -iname "*.gct" -o -iname "*.ngc" -o -iname "*.gsf" -o -iname "*.spt" -o -iname "*.loc" -o -iname "*.gdf" -o -iname "*.tex" -o -iname "*.bmd" -o -iname "*.*pcm*" -o -iname "*.mid" -o -iname "*.dsp" -o -iname "vssver.scc" -o -iname "*.gct" -or -iname "*.gfn" -or -iname "*.bnr" -or -iname "*.h4m" -or -iname "*.sni" -or -iname "*.gsf" -or -iname "*.zsd" -or -iname "*.thp" -or -iname "*.mpc" -or -iname "*.bmd" -or -iname "*.fpk" -or -iname "*.viv" -or -iname "*.ngc" -or -iname "*.div" -or -iname "*.vid" -or -iname "*.vp*" -or -iname "*.sp" -or -iname "*.str" -or -iname "*.mus" -or -iname "*.flo" -or -iname "*.exa" -or -iname "*.ssd" -or -iname "*.sbf" -or -iname "*.spe" -or -iname "*.dat" -or -iname "*.sdt" -or -iname "*.lmp" -or -iname "*.feb" -or -iname "*.bin" -or -iname "*.dat" -or -iname "*.obj" -or -iname "*.lfb" -or -iname "*.med" -or -iname "*.samp"  -or -iname ".bnk" -or -iname "*.dsp" -or -iname "*.gsh" -or -iname "*.fsh" -or -iname "*.vsh" -or -iname "*.big" -or -iname *.abg -or -iname "*.bad" -or -iname "*.add" -o -iname "*.adb" -o -iname "*.fs" \) -delete 2>/dev/null || true'
 #        alias filterTextFiles='grep -Elis "__start|msl_c|MetroTRK|jsystem|#!/bin|\b[a-zA-Z_-$@]{6,}\.(cpp|hpp|a|o|c|h)\b([\"\'> \n])|text section layout" *.map *.txt *.ini *.xml *.cfg | xargs -I{} rm -f {} 2>/dev/null'
 	alias filterFind='find . -type f -exec grep -ELis "0x[0-9a-fA-F]{8,}|ppceabi|metrotrk|metrowerks|msl_c|section layout|3DPanel|.text|.data|.rodata|.sbss|.bss|([a-z_$@.-]|[A-Z_$@.-]){5,}\.(cpp|hpp|a|o|c|h)[^a-zA-Z]$" "{}" \; | xargs -I "{}" rm -f "{}" 2>/dev/null || true'
 	alias filterExt='find . -type f ! \( -iname "*.dmp" -o -iname "*.fld*" -o -iname "*.run" -o -iname "*.xls*" -o -iname "*.bpr*" -o -iname "*.ddf*" -o -iname "*.mdl*" -o -iname "*.img*" -o -iname "*.map*" -o -iname "*.rel*" -o -iname "*.elf*" -o -iname "*.exe*" -o -iname "*.txt*" -o -iname "*.dol*" -o -iname "*.*sym*" -o -iname "*.lua*" -o -iname "*.rso*" -o -iname "*.csv*" -o -iname "*.dlf*" -o -iname "*.sh" -o -iname "*.gci*" -o -iname "*.sav*" -o -iname "*.tdf*" -o -iname "*.inf*" -o -iname "*.bat*" -o -iname "*readme*" -o -iname "*.doc*" -o -iname "*.cfg*" -o -iname "*.s" -o -iname "*.s.*" -o -iname "*.c" -o -iname "*.c.*" -o -iname "*.h" -o -iname "*.h.*" -o -iname "*.cpp" -o -iname "*.hpp" -o -iname "*.o" -o -iname "*.o.*" -o -iname "*.a" -o -iname "*.a.*" -o -iname "*.flb*" -o -iname "*.xml*" -o -iname "*.so" -o -iname "*.dll*" -o -iname "*.*log*" -o -iname "*.ini*" -o -iname "*.pdf*" -o -iname "*.yml*" -o -iname "*.yaml*" -o -iname "*.json*" -or -iname "*.py" -or -iname "*.exe*" -o -iname "*makefile*" -o -iname "*cmake*" -o -iname "*.sln*" -o -iname "*vsproj*" -o -iname "*.mak" -o -iname "*.mk" \) -exec mv "{}"'
@@ -17,6 +17,7 @@
 	alias dolphinTool='dolphin-tool'
         export link="https://myrient.erista.me/files/Redump/Nintendo%20-%20GameCube%20-%20NKit%20RVZ%20%5Bzstd-19-128k%5D"
 
+	rm -f "./gamelist"
 	echo "# Getting index ..."
 	wget -q "$link/"
 	echo "# OK, now index for filenames, download and process everything ..."
@@ -37,6 +38,7 @@
             done;
 	    file_name="${filename%.zip}";
           fi && \
+	  echo "$file_name" >> "./gamelist" && \
           if ! [ -d "$file_name" ]; then
 #	    echo "   Name: $file_name";
 	    wait $!;
@@ -51,7 +53,7 @@
 	    echo " # NVM, exists, skipping.";
 	    rm "$filename";
 	    continue;
-	  fi
+	  fi && \
           mkdir "$file_name" && \
           echo " # Extracting download ..." && \
           7z x "$filename" -y -bso0 -bsp0 -bse0 && \
